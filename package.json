@@ -1,0 +1,34 @@
+{
+  "name": "ninjas-node",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start-dev": "nodemon ./bin/www",
+    "start": "node ./bin/www",
+    "test": "nyc mocha --timeout 10000 'tests/**/*.test.js'",
+    "test-coverage": "nyc --reporter=html mocha --timeout 10000 'tests/**/*.test.js'",
+    "migrate": "sequelize db:migrate",
+    "migrate-undo": "sequelize db:migrate:undo"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "express-handlebars": "^3.0.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0",
+    "pg": "^7.8.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.42.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "dotenv": "^6.2.0",
+    "eslint": "^5.12.0",
+    "faker": "^4.1.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.3.0",
+    "prettier": "^1.16.1"
+  }
+}

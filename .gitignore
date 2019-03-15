@@ -1,0 +1,8 @@
+.vscode
+node_modules
+.env
+.eslintrc.json
+.sequelizerc
+/_notes
+/coverage
+.nyc_output
