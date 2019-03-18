@@ -1,4 +1,5 @@
 const { Guild, Member } = require('../db/models');
+const { validateQueryResponse } = require('../utils');
 
 exports.listGuilds = function(req, res, next) {
   return Guild.findAll({
@@ -20,7 +21,8 @@ exports.listGuilds = function(req, res, next) {
 };
 
 exports.guildsById = function(req, res, next) {
-  return Guild.findById(req.params.id, {
+  return Guild.findAll({
+    where: { id: req.params.id },
     include: [
       {
         model: Member,
@@ -28,6 +30,6 @@ exports.guildsById = function(req, res, next) {
       }
     ]
   })
-    .then(guilds => res.status(200).send(guilds))
-    .catch(error => res.status(400).send(error));
+    .then(guild => validateQueryResponse(guild, res, next))
+    .catch(error => next('Invalid Query'));
 };
