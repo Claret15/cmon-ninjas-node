@@ -5,6 +5,8 @@ const path            = require('path');
 const cookieParser    = require('cookie-parser');
 const logger          = require('morgan');
 const exphbs          = require('express-handlebars');
+const debug           = require('debug')('ninjas-node:server');
+const helmet          = require('helmet');
 
 const indexRouter     = require('./routes/index');
 const guildRouter     = require('./routes/guild');
@@ -12,6 +14,7 @@ const membersRouter   = require('./routes/members');
 
 const app = express();
 
+app.use(helmet());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -47,7 +50,5 @@ app.use(function (err, req, res, next) {
 
 module.exports = app;
 
-
-
 // Check environment
-console.log('Environment: ' + process.env.NODE_ENV);
+debug('Environment: ' + process.env.NODE_ENV);
