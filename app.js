@@ -9,8 +9,9 @@ const debug           = require('debug')('ninjas-node:server');
 const helmet          = require('helmet');
 
 const indexRouter     = require('./routes/index');
-const guildRouter     = require('./routes/guild');
+const guildsRouter     = require('./routes/guild');
 const membersRouter   = require('./routes/members');
+const leaguesRouter   = require('./routes/league');
 
 const app = express();
 
@@ -30,7 +31,8 @@ app.set('view engine', 'handlebars');
 // define default routes and managed by routers/controllers
 app.use('/', indexRouter);
 app.use('/api/members', membersRouter);
-app.use('/api/guilds', guildRouter);
+app.use('/api/guilds', guildsRouter);
+app.use('/api/leagues', leaguesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
