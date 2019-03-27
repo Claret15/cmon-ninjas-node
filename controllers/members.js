@@ -26,8 +26,14 @@ exports.membersAll = function(req, res, next) {
 exports.membersById = function(req, res, next) {
   return Member.findAll({
     where: { id: req.params.id },
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    },
     include: [
       {
+        attributes: {
+          exclude: ['createdAt', 'updatedAt']
+        },
         model: Guild,
         as: 'guild'
       }
