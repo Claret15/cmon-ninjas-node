@@ -8,7 +8,7 @@
     "watch": "mocha -w 'tests/**/*.test.js'",
     "test": "mocha --timeout 10000 'tests/**/*.test.js'",
     "test-coverage": "nyc --reporter=html mocha --timeout 10000 'tests/**/*.test.js'",
-    "migrate": "sequelize db:migrate",
+    "migrate": "sequelize db:migrate && sequelize db:seed:all",
     "migrate-undo": "sequelize db:migrate:undo:all",
     "seed": "sequelize db:seed:all",
     "seed-undo": "sequelize db:seed:undo:all"
