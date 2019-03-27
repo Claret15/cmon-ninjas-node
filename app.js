@@ -12,6 +12,7 @@ const indexRouter     = require('./routes/index');
 const guildsRouter     = require('./routes/guild');
 const membersRouter   = require('./routes/members');
 const leaguesRouter   = require('./routes/league');
+const eventTypesRouter   = require('./routes/event_types');
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use('/', indexRouter);
 app.use('/api/members', membersRouter);
 app.use('/api/guilds', guildsRouter);
 app.use('/api/leagues', leaguesRouter);
+app.use('/api/event_types', eventTypesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
