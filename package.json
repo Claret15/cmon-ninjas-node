@@ -9,7 +9,9 @@
     "test": "mocha --timeout 10000 'tests/**/*.test.js'",
     "test-coverage": "nyc --reporter=html mocha --timeout 10000 'tests/**/*.test.js'",
     "migrate": "sequelize db:migrate",
-    "migrate-undo": "sequelize db:migrate:undo"
+    "migrate-undo": "sequelize db:migrate:undo:all",
+    "seed": "sequelize db:seed:all",
+    "seed-undo": "sequelize db:seed:undo:all"
   },
   "dependencies": {
     "cookie-parser": "^1.4.4",
