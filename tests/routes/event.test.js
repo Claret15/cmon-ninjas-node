@@ -5,12 +5,12 @@ const chai = require('chai'),
 
 chai.use(chaiHttp);
 
-describe('Event Type routes', function() {
-  describe('GET /api/event_types', function() {
-    it('should retrieve a list of all event types', function(done) {
+describe('Event routes', function() {
+  describe('GET /api/events', function() {
+    it('should retrieve a list of all event', function(done) {
       chai
         .request(app)
-        .get('/api/event_types')
+        .get('/api/events')
         .end(function(err, res) {
           expect(res).to.have.status(200);
           expect(res.body).to.be.an('array');
@@ -22,7 +22,7 @@ describe('Event Type routes', function() {
     it('should return error with invalid query', function(done) {
       chai
         .request(app)
-        .get('/api/event_typesas')
+        .get('/api/eventsss')
         .end(function(err, res) {
           expect(res).to.have.status(404);
           expect(err).to.be.null;
@@ -30,11 +30,11 @@ describe('Event Type routes', function() {
         });
     });
 
-    describe('GET /api/event_types/:id', function() {
-      it('should retrieve a single event type', function(done) {
+    describe('GET /api/events/:id', function() {
+      it('should retrieve a single event', function(done) {
         chai
           .request(app)
-          .get('/api/event_types/1')
+          .get('/api/events/1')
           .end(function(err, res) {
             expect(res).to.have.status(200);
             expect(res.body).to.be.an('array');
@@ -43,10 +43,10 @@ describe('Event Type routes', function() {
           });
       });
 
-      it('should return an error if event type does not exist', function(done) {
+      it('should return an error if event does not exist', function(done) {
         chai
           .request(app)
-          .get('/api/event_types/13')
+          .get('/api/events/13')
           .end(function(err, res) {
             expect(res).to.have.status(404);
             expect(res.body)
@@ -59,7 +59,7 @@ describe('Event Type routes', function() {
       it('should return error with invalid query', function(done) {
         chai
           .request(app)
-          .get('/api/event_types/asd')
+          .get('/api/events/asd')
           .end(function(err, res) {
             expect(res).to.have.status(500);
             expect(res.body)
