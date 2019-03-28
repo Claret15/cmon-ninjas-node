@@ -7,21 +7,21 @@ module.exports = {
       [
         {
           name: 'The First Dragoon',
-          event_type_id: 2,
+          eventType_id: 2,
           date: '2018-10-11',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           name: 'The Arena',
-          event_type_id: 3,
+          eventType_id: 3,
           date: '2018-10-18',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           name: 'Fennec Fright Fest',
-          event_type_id: 1,
+          eventType_id: 1,
           date: '2018-10-25',
           createdAt: new Date(),
           updatedAt: new Date()

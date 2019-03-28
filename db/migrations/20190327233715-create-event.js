@@ -11,6 +11,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      eventType_id: {
+        type: Sequelize.INTEGER
+      },
       date: {
         type: Sequelize.DATEONLY
       },

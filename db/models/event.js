@@ -4,14 +4,15 @@ module.exports = (sequelize, DataTypes) => {
     'Event',
     {
       name: DataTypes.STRING,
-      date: DataTypes.DATEONLY
+      date: DataTypes.DATEONLY,
+      eventType_id: DataTypes.INTEGER
     },
     {}
   );
   Event.associate = function(models) {
     // associations can be defined here
     Event.belongsTo(models.EventType, {
-      foreignKey: 'event_type_id',
+      foreignKey: 'eventType_id',
       as: 'event_type'
     });
   };

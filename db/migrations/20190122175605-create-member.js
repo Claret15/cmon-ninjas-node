@@ -11,13 +11,17 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      is_active: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: true
+      guild_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true
       },
       title: {
         type: Sequelize.STRING,
         allowNull: true
+      },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },
       createdAt: {
         allowNull: false,
