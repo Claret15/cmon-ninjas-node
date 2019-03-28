@@ -10,7 +10,9 @@ cache: npm
 before_script:
 - psql -c 'create database test_ninjas;' -U postgres
 
-script: npm run migrate
+script: 
+  - npm run migrate
+  - npm test
 
 env:
   global:
