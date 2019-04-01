@@ -1,0 +1,11 @@
+  <h1>Members</h1>
+
+  {{#each members}}
+    <p>id: {{ id }}</p>
+    <p>Name: {{ name }}</p>
+    <p>Guild: {{ guild.name }}</p>
+    <p>Title: {{ title }}</p>
+    <p>Active: {{#if is_active}} Active {{else}} Not Active {{/if}}</p>
+
+    <br>
+  {{/each}}
