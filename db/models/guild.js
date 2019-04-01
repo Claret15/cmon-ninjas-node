@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'guild_id',
       as: 'members',
     });
+    Guild.hasMany(models.EventStat, {
+      foreignKey: 'guild_id',
+      as: 'eventStats',
+    });
   };
   return Guild;
 };

@@ -29,6 +29,15 @@ module.exports = {
           field: 'id'
         },
         onUpdate: 'cascade'
+      }),
+      queryInterface.addConstraint('EventStats', ['guild_id'], {
+        type: 'foreign key',
+        name: 'fk_stat_guild',
+        references: {
+          table: 'Guilds',
+          field: 'id'
+        },
+        onUpdate: 'cascade'
       })
     );
   },
@@ -37,7 +46,8 @@ module.exports = {
     return (
       queryInterface.removeConstraint('EventStats', 'fk_stat_event'),
       queryInterface.removeConstraint('EventStats', 'fk_stat_member'),
-      queryInterface.removeConstraint('EventStats', 'fk_stat_league')
+      queryInterface.removeConstraint('EventStats', 'fk_stat_league'),
+      queryInterface.removeConstraint('EventStats', 'fk_stat_guild')
     );
   }
 };

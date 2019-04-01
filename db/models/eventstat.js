@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       member_id: DataTypes.INTEGER,
       event_id: DataTypes.INTEGER,
+      guild_id: DataTypes.INTEGER,
       guildPts: DataTypes.BIGINT,
       position: DataTypes.INTEGER,
       soloPts: DataTypes.BIGINT,
@@ -27,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     EventStat.belongsTo(models.League, {
       foreignKey: 'league_id',
       as: 'league'
+    });
+    EventStat.belongsTo(models.Guild, {
+      foreignKey: 'guild_id',
+      as: 'guilds'
     });
   };
   return EventStat;

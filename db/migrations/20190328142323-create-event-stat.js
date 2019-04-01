@@ -14,6 +14,9 @@ module.exports = {
       event_id: {
         type: Sequelize.INTEGER
       },
+      guild_id: {
+        type: Sequelize.INTEGER
+      },
       guildPts: {
         type: Sequelize.BIGINT
       },
