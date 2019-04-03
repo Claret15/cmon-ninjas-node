@@ -5,7 +5,7 @@ const chai = require('chai'),
 
 chai.use(chaiHttp);
 
-describe('Members PUT /api/members', function() {
+describe('Members PUT /api/members/:id', function() {
   describe('Update Member', function() {
     it('should update a member', function(done) {
       chai

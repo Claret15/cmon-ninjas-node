@@ -5,7 +5,7 @@ const chai = require('chai'),
 
 chai.use(chaiHttp);
 
-describe('Leagues PUT /api/leagues', function() {
+describe('Leagues PUT /api/leagues/:id', function() {
   describe('Update Leagues', function() {
     it('should update League', function(done) {
       chai

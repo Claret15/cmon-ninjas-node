@@ -5,7 +5,7 @@ const chai = require('chai'),
 
 chai.use(chaiHttp);
 
-describe('EventType PUT /api/event_types', function() {
+describe('EventType PUT /api/event_types/:id', function() {
   describe('Update EventType', function() {
     it('should update EventType', function(done) {
       chai

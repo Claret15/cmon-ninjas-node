@@ -5,7 +5,7 @@ const chai = require('chai'),
 
 chai.use(chaiHttp);
 
-describe('Guilds PUT /api/guilds', function() {
+describe('Guilds PUT /api/guilds/:id', function() {
   describe('Update Guild', function() {
     it('should update a Guild', function(done) {
       chai
