@@ -82,3 +82,41 @@ exports.createMember = async function(req, res, next) {
       });
     });
 };
+
+exports.updateMember = async function(req, res, next) {
+  // Check if validateMember() middleware fails and returns error message
+  const errors = await validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      errors: errors.array()
+    });
+  }
+
+  // Check if Member already exists
+  let foundMember = await Member.findOne({
+    where: {
+      id: req.params.id
+    }
+  });
+
+  if (foundMember == null) {
+    return res.status(422).json({
+      error: 'Member does not exist'
+    });
+  }
+
+  return foundMember
+    .update({
+      name: req.body.name,
+      isActive: req.body.isActive,
+      title: req.body.title,
+      guild_id: req.body.guild_id
+    })
+    .then(member => res.status(201).send({ member, success: 'Member updated' }))
+    .catch(error => {
+      return res.status(400).json({
+        error: 'Unable to update Member'
+      });
+    });
+};

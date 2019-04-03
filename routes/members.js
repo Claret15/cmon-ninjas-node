@@ -12,4 +12,6 @@ router.get('/:id/events/:event_id', EventStatsController.memberEventStatsById);
 router.post('/', validateMember(), membersController.createMember);
 router.post('/:id/events', validateEventStat(), EventStatsController.createMemberEventStat);
 
+router.put('/:id', validateMember(), membersController.updateMember);
+
 module.exports = router;
