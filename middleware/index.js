@@ -8,3 +8,9 @@ exports.validateMember = () => {
     body('isActive', 'Value should be true or false').optional().isBoolean()
   ];
 };
+
+exports.validateGuild = () => {
+  return [
+    body('name', 'Name must be between 1-25 characters.').isLength({min:1, max:25}).trim().escape(),
+  ];
+};
