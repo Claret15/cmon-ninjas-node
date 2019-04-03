@@ -6,14 +6,14 @@ const chai = require('chai'),
 const { League } = require('../../db/models');
 chai.use(chaiHttp);
 
-describe('Leagues POST /api/guilds', function() {
+describe('Leagues POST /api/leagues', function() {
   describe('Create a new League', function() {
     afterEach('Delete League after each test', async function() {
       // Find all records from the database, returns an array
       let leagues = await League.findAll();
       // Calculate last index of the array
       let lastIndex = leagues.length - 1;
-      // Delete Guild instance
+      // Delete League instance
       leagues[lastIndex].destroy();
     });
 

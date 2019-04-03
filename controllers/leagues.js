@@ -29,7 +29,7 @@ exports.leagueById = function(req, res, next) {
 };
 
 exports.createLeague = async function(req, res, next) {
-  // Check if validateGuild() middleware fails and returns error message
+  // Check if validateLeague() middleware fails and returns error message
   const errors = await validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -38,7 +38,7 @@ exports.createLeague = async function(req, res, next) {
     });
   }
 
-  // Check if Guild already exists
+  // Check if League already exists
   let league = await League.findOne({
     where: {
       name: req.body.name
