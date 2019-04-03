@@ -9,11 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       guild_id: {
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: false
       },
       title: {
         type: Sequelize.STRING,

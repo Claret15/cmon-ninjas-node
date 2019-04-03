@@ -1,5 +1,6 @@
 const { Member, Guild } = require('../db/models');
 const { validateQueryResponse } = require('../utils');
+const { validationResult } = require('express-validator/check');
 
 exports.membersAll = function(req, res, next) {
   return (
@@ -25,7 +26,9 @@ exports.membersAll = function(req, res, next) {
 
 exports.membersById = function(req, res, next) {
   return Member.findAll({
-    where: { id: req.params.id },
+    where: {
+      id: req.params.id
+    },
     attributes: {
       exclude: ['createdAt', 'updatedAt']
     },
@@ -43,13 +46,39 @@ exports.membersById = function(req, res, next) {
     .catch(error => next('Invalid Query'));
 };
 
-// exports.createMember = function(req,res, next) {
-//       return Member
-//       .create({
-//         name: req.body.name,
-//         is_active: req.body.active,
-//         title: req.body.title
-//       })
-//       .then(user => res.status(201).send(user))
-//       .catch(error => res.status(400).send(error));
-// }
+exports.createMember = async function(req, res, next) {
+  // Check if validateMember() middleware fails and returns error message
+  const errors = await validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      errors: errors.array()
+    });
+  }
+
+  // Check if Member already exists
+  let member = await Member.findOne({
+    where: {
+      name: req.body.name
+    }
+  });
+
+  if (member != null && member.name == req.body.name) {
+    return res.status(422).json({
+      error: 'Member already exists'
+    });
+  }
+
+  return Member.create({
+    name: req.body.name,
+    isActive: req.body.isActive,
+    title: req.body.title,
+    guild_id: req.body.guild_id
+  })
+    .then(member => res.status(201).send({ member, success: 'Member added' }))
+    .catch(error => {
+      return res.status(400).json({
+        error: 'Unable to create Member'
+      });
+    });
+};
