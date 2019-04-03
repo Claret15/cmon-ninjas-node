@@ -9,12 +9,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       eventType_id: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       date: {
+        allowNull: false,
         type: Sequelize.DATEONLY
       },
       createdAt: {

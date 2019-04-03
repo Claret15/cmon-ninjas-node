@@ -26,3 +26,11 @@ exports.validateEventType = () => {
     body('name', 'Name must be between 1-20 characters.').isLength({min:1, max:20}).trim().escape(),
   ];
 };
+
+exports.validateEvent = () => {
+  return [
+    body('name', 'Name must be between 1-50 characters.').isLength({min:1, max:50}).trim().escape(),
+    body('eventType_id', 'Invalid Event Type, should be an integer').isInt(),
+    body('date', 'Date format: YYYY-MM-DD').isISO8601()
+  ];
+};
