@@ -34,3 +34,17 @@ exports.validateEvent = () => {
     body('date', 'Date format: YYYY-MM-DD').isISO8601()
   ];
 };
+
+exports.validateEventStat = () => {
+  return [
+    body('member_id').isInt(),
+    body('event_id').isInt(),
+    body('guild_id').isInt(),
+    body('guildPts').isNumeric({no_symbols:true}),
+    body('position', 'Must be between 1 - 30').isInt({max:30}),
+    body('soloPts').isNumeric({no_symbols:true}),
+    body('league_id').isInt(),
+    body('soloRank', 'Must be between 1 - 210').isInt({max:210}),
+    body('globalRank', 'Must be a number').isInt()
+  ];
+};
