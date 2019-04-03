@@ -14,3 +14,9 @@ exports.validateGuild = () => {
     body('name', 'Name must be between 1-25 characters.').isLength({min:1, max:25}).trim().escape(),
   ];
 };
+
+exports.validateLeague = () => {
+  return [
+    body('name', 'Name must be between 1-20 characters.').isLength({min:1, max:20}).trim().escape(),
+  ];
+};
