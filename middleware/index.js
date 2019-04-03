@@ -20,3 +20,9 @@ exports.validateLeague = () => {
     body('name', 'Name must be between 1-20 characters.').isLength({min:1, max:20}).trim().escape(),
   ];
 };
+
+exports.validateEventType = () => {
+  return [
+    body('name', 'Name must be between 1-20 characters.').isLength({min:1, max:20}).trim().escape(),
+  ];
+};
