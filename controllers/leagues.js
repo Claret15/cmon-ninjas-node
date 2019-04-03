@@ -61,3 +61,38 @@ exports.createLeague = async function(req, res, next) {
       });
     });
 };
+
+exports.updateLeague = async function(req, res, next) {
+  // Check if validateLeague() middleware fails and returns error message
+  const errors = await validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      errors: errors.array()
+    });
+  }
+
+  // Check if League does not exist
+  let foundLeague = await League.findOne({
+    where: {
+      id: req.params.id
+    }
+  });
+
+  if (foundLeague == null) {
+    return res.status(422).json({
+      error: 'League does not exist'
+    });
+  }
+
+  return foundLeague
+    .update({
+      name: req.body.name
+    })
+    .then(league => res.status(201).send({ league, success: 'League updated' }))
+    .catch(error => {
+      return res.status(400).json({
+        error: 'Unable to update League'
+      });
+    });
+};

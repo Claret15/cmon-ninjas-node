@@ -7,5 +7,6 @@ router.get('/', leaguesController.listLeagues);
 router.get('/:id', leaguesController.leagueById);
 
 router.post('/', validateLeague(), leaguesController.createLeague);
+router.put('/:id', validateLeague(), leaguesController.updateLeague);
 
 module.exports = router;
