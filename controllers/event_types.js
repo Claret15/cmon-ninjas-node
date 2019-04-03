@@ -63,3 +63,40 @@ exports.createEventType = async function(req, res, next) {
       });
     });
 };
+
+exports.updateEventType = async function(req, res, next) {
+  // Check if validateEventType() middleware fails and returns error message
+  const errors = await validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      errors: errors.array()
+    });
+  }
+
+  // Check if EventType does not exist
+  let foundEventType = await EventType.findOne({
+    where: {
+      id: req.params.id
+    }
+  });
+
+  if (foundEventType == null) {
+    return res.status(422).json({
+      error: 'Event Type does not exist'
+    });
+  }
+
+  return foundEventType
+    .update({
+      name: req.body.name
+    })
+    .then(eventType =>
+      res.status(201).send({ eventType, success: 'Event Type updated' })
+    )
+    .catch(error => {
+      return res.status(400).json({
+        error: 'Unable to update Event Type'
+      });
+    });
+};
