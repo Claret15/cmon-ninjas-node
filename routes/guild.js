@@ -9,5 +9,6 @@ router.get('/:id', guildsController.guildsById);
 router.get('/:id/events/:event_id', guildStatsController.guildEventStatsById);
 
 router.post('/', validateGuild(), guildsController.createGuild);
+router.put('/:id', validateGuild(), guildsController.updateGuild);
 
 module.exports = router;

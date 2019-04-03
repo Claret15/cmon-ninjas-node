@@ -74,3 +74,38 @@ exports.createGuild = async function(req, res, next) {
       });
     });
 };
+
+exports.updateGuild = async function(req, res, next) {
+  // Check if validateGuild() middleware fails and returns error message
+  const errors = await validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      errors: errors.array()
+    });
+  }
+
+  // Check if Guild does not exist
+  let foundGuild = await Guild.findOne({
+    where: {
+      id: req.params.id
+    }
+  });
+
+  if (foundGuild == null) {
+    return res.status(422).json({
+      error: 'Guild does not exist'
+    });
+  }
+
+  return foundGuild
+    .update({
+      name: req.body.name
+    })
+    .then(guild => res.status(201).send({ guild, success: 'Guild updated' }))
+    .catch(error => {
+      return res.status(400).json({
+        error: 'Unable to update Guild'
+      });
+    });
+};

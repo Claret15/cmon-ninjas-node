@@ -93,7 +93,7 @@ exports.updateMember = async function(req, res, next) {
     });
   }
 
-  // Check if Member already exists
+  // Check if Member does not exist
   let foundMember = await Member.findOne({
     where: {
       id: req.params.id
