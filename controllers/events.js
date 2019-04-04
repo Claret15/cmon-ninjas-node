@@ -63,3 +63,40 @@ exports.createEvent = async function(req, res, next) {
       });
     });
 };
+
+exports.updateEvent = async function(req, res, next) {
+  // Check if validateEvent() middleware fails and returns error message
+  const errors = await validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      errors: errors.array()
+    });
+  }
+
+  // Check if Event does not exist
+  let foundEvent = await Event.findOne({
+    where: {
+      id: req.params.id
+    }
+  });
+
+  if (foundEvent == null) {
+    return res.status(422).json({
+      error: 'Event does not exist'
+    });
+  }
+
+  return foundEvent
+    .update({
+      name: req.body.name,
+      date: req.body.date,
+      eventType_id: req.body.eventType_id
+    })
+    .then(event => res.status(201).send({ event, success: 'Event updated' }))
+    .catch(error => {
+      return res.status(400).json({
+        error: 'Unable to update Event'
+      });
+    });
+};
