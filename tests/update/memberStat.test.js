@@ -23,7 +23,6 @@ describe('EventStat PUT /api/members/:id/events/:event_id', function() {
           globalRank: 2222
         })
         .end(function(err, res) {
-          console.log(res.body.eventStat);
           expect(res).to.have.status(201);
           expect(res.body.eventStat.member_id).to.equal(2);
           expect(res.body.eventStat.event_id).to.equal(2);
