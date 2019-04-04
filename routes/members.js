@@ -15,4 +15,6 @@ router.post('/:id/events', validateEventStat(), EventStatsController.createMembe
 router.put('/:id', validateMember(), membersController.updateMember);
 router.put('/:id/events/:event_id', validateEventStat(), EventStatsController.updateMemberEventStat);
 
+router.delete('/:id', membersController.deleteMember);
+
 module.exports = router;

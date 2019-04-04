@@ -120,3 +120,13 @@ exports.updateMember = async function(req, res, next) {
       });
     });
 };
+
+exports.deleteMember = async function(req, res, next) {
+  try {
+    let foundMember = await Member.findOne({ where: { id: req.params.id } });
+    await foundMember.destroy();
+    return res.status(200).send({ foundMember, success: 'Member deleted' });
+  } catch (err) {
+    return res.status(404).send({ error: 'Member does not exist' });
+  }
+};
