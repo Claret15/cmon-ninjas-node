@@ -146,11 +146,15 @@ exports.createMemberEventStat = async function(req, res, next) {
   let stat = await EventStat.findOne({
     where: {
       member_id: req.body.member_id,
-      event_id: req.body.event_id,
+      event_id: req.body.event_id
     }
   });
 
-  if (stat != null && stat.member_id == req.body.member_id && stat.event_id == req.body.event_id) {
+  if (
+    stat != null &&
+    stat.member_id == req.body.member_id &&
+    stat.event_id == req.body.event_id
+  ) {
     return res.status(422).json({
       error: 'Event Stat already exists'
     });
@@ -165,12 +169,59 @@ exports.createMemberEventStat = async function(req, res, next) {
     soloPts: req.body.soloPts,
     league_id: req.body.league_id,
     soloRank: req.body.soloRank,
-    globalRank: req.body.globalRank,
+    globalRank: req.body.globalRank
   })
-    .then(eventStat => res.status(201).send({ eventStat, success: 'Event Stat added' }))
+    .then(eventStat =>
+      res.status(201).send({ eventStat, success: 'Event Stat added' })
+    )
     .catch(error => {
       return res.status(400).json({
         error: 'Unable to create Event Stat'
+      });
+    });
+};
+
+exports.updateMemberEventStat = async function(req, res, next) {
+  // Check if validateMemberEventStat() middleware fails and returns error message
+  const errors = await validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      errors: errors.array()
+    });
+  }
+
+  // Check if Event Stat does not exist
+  let foundStat = await EventStat.findOne({
+    where: {
+      id: req.params.event_id
+    }
+  });
+
+  if (foundStat == null) {
+    return res.status(422).json({
+      error: 'Event Stat does not exist'
+    });
+  }
+
+  return foundStat
+    .update({
+      member_id: req.body.member_id,
+      event_id: req.body.event_id,
+      guild_id: req.body.guild_id,
+      guildPts: req.body.guildPts,
+      position: req.body.position,
+      soloPts: req.body.soloPts,
+      league_id: req.body.league_id,
+      soloRank: req.body.soloRank,
+      globalRank: req.body.globalRank
+    })
+    .then(eventStat =>
+      res.status(201).send({ eventStat, success: 'Event Stat updated' })
+    )
+    .catch(error => {
+      return res.status(400).json({
+        error: 'Unable to update Event Stat'
       });
     });
 };
