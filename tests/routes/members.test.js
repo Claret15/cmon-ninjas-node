@@ -42,7 +42,7 @@ describe('Members routes', function() {
 
     it('should return an error if member does not exist', function(done) {
       chai.request(app)
-        .get('/api/members/13')
+        .get('/api/members/999')
         .end(function(err, res) {
           expect(res).to.have.status(404);
           expect(res.body)
