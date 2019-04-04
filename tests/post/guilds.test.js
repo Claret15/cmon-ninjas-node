@@ -8,13 +8,13 @@ chai.use(chaiHttp);
 
 describe('Guilds POST /api/guilds', function() {
   describe('Create a new Guild', function() {
-    afterEach('Delete Guild after each test', async function() {
-      // Find all records from the database, returns an array
-      let guilds = await Guild.findAll();
-      // Calculate last index of the array
-      let lastIndex = guilds.length - 1;
-      // Delete Guild instance
-      guilds[lastIndex].destroy();
+    after('Delete Guild after each test', async function() {
+      try {
+        const foundGuild = await Guild.findOne({ where: { name: 'Warriors' } });
+        foundGuild.destroy();
+      } catch (err) {
+        throw new Error('Unable to delete Guild');
+      }
     });
 
     it('should create a new Guild', function(done) {
@@ -35,18 +35,22 @@ describe('Guilds POST /api/guilds', function() {
 
   describe('Attempt to create a Guild but Guild already exists', function() {
     before('Create a Guild before the test', async function() {
-      await chai
-        .request(app)
-        .post('/api/guilds')
-        .send({
+      try {
+        await Guild.create({
           name: 'Warriors'
         });
+      } catch (err) {
+        throw new Error('Unable to create Guild');
+      }
     });
 
     after('Delete Guild after the test', async function() {
-      let guilds = await Guild.findAll();
-      let lastIndex = guilds.length - 1;
-      guilds[lastIndex].destroy();
+      try {
+        const foundGuild = await Guild.findOne({ where: { name: 'Warriors' } });
+        foundGuild.destroy();
+      } catch (err) {
+        throw new Error('Unable to delete Guild');
+      }
     });
 
     it('should return message: "Guild already exists"', function(done) {
@@ -82,9 +86,14 @@ describe('Guilds POST /api/guilds', function() {
 
   describe('Test validateGuild middleware - PASS', function() {
     after('Delete Guild after the test', async function() {
-      let guilds = await Guild.findAll();
-      let lastIndex = guilds.length - 1;
-      guilds[lastIndex].destroy();
+      try {
+        const foundGuild = await Guild.findOne({
+          where: { name: 'Warriors&lt;script&gt;' }
+        });
+        foundGuild.destroy();
+      } catch (err) {
+        throw new Error('Unable to delete Guild');
+      }
     });
 
     it('should pass all express-validator checks', function(done) {
