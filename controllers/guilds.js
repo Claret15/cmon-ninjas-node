@@ -109,3 +109,13 @@ exports.updateGuild = async function(req, res, next) {
       });
     });
 };
+
+exports.deleteGuild = async function(req, res, next) {
+  try {
+    let foundGuild = await Guild.findOne({ where: { id: req.params.id } });
+    await foundGuild.destroy();
+    return res.status(200).send({ foundGuild, success: 'Guild deleted' });
+  } catch (err) {
+    return res.status(404).send({ error: 'Guild does not exist' });
+  }
+};

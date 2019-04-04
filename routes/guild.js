@@ -11,4 +11,6 @@ router.get('/:id/events/:event_id', guildStatsController.guildEventStatsById);
 router.post('/', validateGuild(), guildsController.createGuild);
 router.put('/:id', validateGuild(), guildsController.updateGuild);
 
+router.delete('/:id', guildsController.deleteGuild);
+
 module.exports = router;
