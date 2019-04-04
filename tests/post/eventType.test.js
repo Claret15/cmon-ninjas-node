@@ -9,12 +9,14 @@ chai.use(chaiHttp);
 describe('EventType POST /api/event_types', function() {
   describe('Create a new EventType', function() {
     afterEach('Delete EventType after each test', async function() {
-      // Find all records from the database, returns an array
-      let types = await EventType.findAll();
-      // Calculate last index of the array
-      let lastIndex = types.length - 1;
-      // Delete EventType instance
-      types[lastIndex].destroy();
+      try {
+        const foundEventType = await EventType.findOne({
+          where: { name: 'Deathmatch' }
+        });
+        foundEventType.destroy();
+      } catch (err) {
+        throw new Error('Unable to delete Event Type');
+      }
     });
 
     it('should create a new EventType', function(done) {
@@ -35,18 +37,24 @@ describe('EventType POST /api/event_types', function() {
 
   describe('Attempt to create a EventType but EventType already exists', function() {
     before('Create a EventType before the test', async function() {
-      await chai
-        .request(app)
-        .post('/api/event_types')
-        .send({
+      try {
+        await EventType.create({
           name: 'Deathmatch'
         });
+      } catch (err) {
+        throw new Error('Unable to create Event Type');
+      }
     });
 
     after('Delete EventType after the test', async function() {
-      let types = await EventType.findAll();
-      let lastIndex = types.length - 1;
-      types[lastIndex].destroy();
+      try {
+        const foundEventType = await EventType.findOne({
+          where: { name: 'Deathmatch' }
+        });
+        foundEventType.destroy();
+      } catch (err) {
+        throw new Error('Unable to delete Event Type');
+      }
     });
 
     it('should return message: "EventType already exists"', function(done) {
@@ -82,9 +90,14 @@ describe('EventType POST /api/event_types', function() {
 
   describe('Test validateEventType middleware - PASS', function() {
     after('Delete EventType after the test', async function() {
-      let types = await EventType.findAll();
-      let lastIndex = types.length - 1;
-      types[lastIndex].destroy();
+      try {
+        const foundEventType = await EventType.findOne({
+          where: { name: 'Deathmatch&lt;br&gt;' }
+        });
+        foundEventType.destroy();
+      } catch (err) {
+        throw new Error('Unable to delete Event Type');
+      }
     });
 
     it('should pass all express-validator checks', function(done) {
