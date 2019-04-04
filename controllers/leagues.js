@@ -96,3 +96,13 @@ exports.updateLeague = async function(req, res, next) {
       });
     });
 };
+
+exports.deleteLeague = async function(req, res, next) {
+  try {
+    let foundLeague = await League.findOne({ where: { id: req.params.id } });
+    await foundLeague.destroy();
+    return res.status(200).send({ foundLeague, success: 'League deleted' });
+  } catch (err) {
+    return res.status(404).send({ error: 'League does not exist' });
+  }
+};

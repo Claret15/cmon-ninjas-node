@@ -9,4 +9,6 @@ router.get('/:id', leaguesController.leagueById);
 router.post('/', validateLeague(), leaguesController.createLeague);
 router.put('/:id', validateLeague(), leaguesController.updateLeague);
 
+router.delete('/:id', leaguesController.deleteLeague);
+
 module.exports = router;
