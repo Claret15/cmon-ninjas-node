@@ -9,12 +9,14 @@ chai.use(chaiHttp);
 describe('Event POST /api/events', function() {
   describe('Create a new Event', function() {
     after('Delete Event after each test', async function() {
-      // Find all records from the database, returns an array
-      let events = await Event.findAll();
-      // Calculate last index of the array
-      let lastIndex = events.length - 1;
-      // Delete Event instance
-      events[lastIndex].destroy();
+      try {
+        const foundEvent = await Event.findOne({
+          where: { name: 'Game of Thrones' }
+        });
+        foundEvent.destroy();
+      } catch (err) {
+        throw new Error('Unable to delete Event');
+      }
     });
 
     it('should create an Event', function(done) {
@@ -39,20 +41,26 @@ describe('Event POST /api/events', function() {
 
   describe('Attempt to create an Event but Event already exists', function() {
     before('Create an Event before the test', async function() {
-      await chai
-        .request(app)
-        .post('/api/events')
-        .send({
+      try {
+        await Event.create({
           name: 'Game of Thrones',
           eventType_id: 3,
           date: '2019-04-01'
         });
+      } catch (err) {
+        throw new Error('Unable to create Event');
+      }
     });
 
     after('Delete Event after the test', async function() {
-      let events = await Event.findAll();
-      let lastIndex = events.length - 1;
-      events[lastIndex].destroy();
+      try {
+        const foundEvent = await Event.findOne({
+          where: { name: 'Game of Thrones' }
+        });
+        foundEvent.destroy();
+      } catch (err) {
+        throw new Error('Unable to delete Event');
+      }
     });
 
     it('should return message: "Event already exists"', function(done) {
@@ -92,9 +100,14 @@ describe('Event POST /api/events', function() {
 
   describe('Test validateEvent middleware - PASS', function() {
     after('Delete Event after each test', async function() {
-      let events = await Event.findAll();
-      let lastIndex = events.length - 1;
-      events[lastIndex].destroy();
+      try {
+        const foundEvent = await Event.findOne({
+          where: { name: 'Game of Thrones&lt;script&gt;' }
+        });
+        foundEvent.destroy();
+      } catch (err) {
+        throw new Error('Unable to delete Event');
+      }
     });
 
     it('should pass all express-validator checks', function(done) {
