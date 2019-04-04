@@ -8,13 +8,13 @@ chai.use(chaiHttp);
 
 describe('Leagues POST /api/leagues', function() {
   describe('Create a new League', function() {
-    afterEach('Delete League after each test', async function() {
-      // Find all records from the database, returns an array
-      let leagues = await League.findAll();
-      // Calculate last index of the array
-      let lastIndex = leagues.length - 1;
-      // Delete League instance
-      leagues[lastIndex].destroy();
+    after('Delete League after each test', async function() {
+      try {
+        const foundLeague = await League.findOne({ where: { name: 'Commando' } });
+        foundLeague.destroy();
+      } catch (err) {
+        throw new Error('Unable to delete League');
+      }
     });
 
     it('should create a new League', function(done) {
@@ -35,18 +35,22 @@ describe('Leagues POST /api/leagues', function() {
 
   describe('Attempt to create a League but League already exists', function() {
     before('Create a League before the test', async function() {
-      await chai
-        .request(app)
-        .post('/api/leagues')
-        .send({
+      try {
+        await League.create({
           name: 'Commando'
         });
+      } catch (err) {
+        throw new Error('Unable to create League');
+      }
     });
 
     after('Delete League after the test', async function() {
-      let leagues = await League.findAll();
-      let lastIndex = leagues.length - 1;
-      leagues[lastIndex].destroy();
+      try {
+        const foundLeague = await League.findOne({ where: { name: 'Commando' } });
+        foundLeague.destroy();
+      } catch (err) {
+        throw new Error('Unable to delete League');
+      }
     });
 
     it('should return message: "League already exists"', function(done) {
@@ -82,9 +86,12 @@ describe('Leagues POST /api/leagues', function() {
 
   describe('Test validateLeague middleware - PASS', function() {
     after('Delete League after the test', async function() {
-      let leagues = await League.findAll();
-      let lastIndex = leagues.length - 1;
-      leagues[lastIndex].destroy();
+      try {
+        const foundLeague = await League.findOne({ where: { name: 'Commando&lt;br&gt;' } });
+        foundLeague.destroy();
+      } catch (err) {
+        throw new Error('Unable to delete League');
+      }
     });
 
     it('should pass all express-validator checks', function(done) {
