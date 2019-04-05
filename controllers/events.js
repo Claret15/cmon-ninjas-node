@@ -100,3 +100,17 @@ exports.updateEvent = async function(req, res, next) {
       });
     });
 };
+
+exports.deleteEvent = async function(req, res, next) {
+  try {
+    let foundEvent = await Event.findOne({
+      where: { id: req.params.id }
+    });
+
+    await foundEvent.destroy();
+
+    return res.status(200).send({ foundEvent, success: 'Event deleted' });
+  } catch (err) {
+    return res.status(404).send({ error: 'Event does not exist' });
+  }
+};
