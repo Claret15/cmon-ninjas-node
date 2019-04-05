@@ -100,3 +100,18 @@ exports.updateEventType = async function(req, res, next) {
       });
     });
 };
+
+exports.deleteEventType = async function(req, res, next) {
+  try {
+    let foundEventType = await EventType.findOne({
+      where: { id: req.params.id }
+    });
+    await foundEventType.destroy();
+
+    return res
+      .status(200)
+      .send({ foundEventType, success: 'Event Type deleted' });
+  } catch (err) {
+    return res.status(404).send({ error: 'Event Type does not exist' });
+  }
+};
