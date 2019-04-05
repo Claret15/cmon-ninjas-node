@@ -225,3 +225,19 @@ exports.updateMemberEventStat = async function(req, res, next) {
       });
     });
 };
+
+exports.deleteMemberEventStat = async function(req, res, next) {
+  try {
+    let foundEventStat = await EventStat.findOne({
+      where: { id: req.params.event_id }
+    });
+
+    await foundEventStat.destroy();
+
+    return res
+      .status(200)
+      .send({ foundEventStat, success: 'Event Stat deleted' });
+  } catch (err) {
+    return res.status(404).send({ error: 'Event Stat does not exist' });
+  }
+};
