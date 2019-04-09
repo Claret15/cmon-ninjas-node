@@ -6,7 +6,7 @@ module.exports = {
     'password': process.env.DB_DEV_PASS,
     'database': process.env.DB_DEV_DATA,
     'host': '127.0.0.1',
-    'dialect': 'postgres',
+    'dialect': process.env.DB_DIALECT,
     // 'logging': false
   },
   'test': {
@@ -14,7 +14,7 @@ module.exports = {
     'password': process.env.DB_TEST_PASS,
     'database': process.env.DB_TEST_DATA,
     'host': '127.0.0.1',
-    'dialect': 'postgres',
+    'dialect': process.env.DB_DIALECT,
     'logging': false
   },
   'production': {
@@ -22,6 +22,6 @@ module.exports = {
     'password': process.env.DB_PASS,
     'database': process.env.DB_DATA,
     'host':  process.env.DB_HOST,
-    'dialect': 'postgres'
+    'dialect': process.env.DB_DIALECT
   }
 };
