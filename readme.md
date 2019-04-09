@@ -4,14 +4,11 @@
 
 1. `npm install`
 
-2. Create a database, no need to create tables.
+3. Update config/database.js with your chosen database dialect. This is using postgres and the database driver is already included.
 
-3. Rename the .env.example file to .env.
+   dialect options: 'mysql' | 'mariadb' | 'postgres' | 'mssql'
 
-4. Add your database dialect and database credentials.
-   This is using postgres and the database driver is already included.
-
-   If you decide to use another dialect, make sure you install the relevant driver:
+   If you decide to use another dialect, install the relevant driver:
 
    `npm install --save pg pg-hstore` - Postgres  
    `npm install --save mysql2`  
@@ -20,6 +17,10 @@
    `npm install --save tedious` - Microsoft SQL Server
 
    source: http://docs.sequelizejs.com/manual/getting-started.html
+
+2. Create a database, no need to create tables.
+
+4. Rename the .env.example file to .env and add your database credentials
 
 5. Create the tables in the database:
 
